@@ -156,9 +156,9 @@ intro:-
 	send(P,display,Instructions,point(1,342)),
 	send(P,display,AI,point(217,0)),
 
-	send(AI,recogniser,click_gesture(left,'',single,and(message(@prolog,startAi,P)))),
-	send(TwoPlayers,recogniser,click_gesture(left,'',single,and(message(@prolog,startTwoPlayers,P)))),
-	send(Instructions,recogniser,click_gesture(left,'',single,and(message(@prolog,instructionsPage)))),
+	send(AI,recogniser,click_gesture(left,'',single,and(message(@(prolog),startAi,P)))),
+	send(TwoPlayers,recogniser,click_gesture(left,'',single,and(message(@(prolog),startTwoPlayers,P)))),
+	send(Instructions,recogniser,click_gesture(left,'',single,and(message(@(prolog),instructionsPage)))),
 
         send(P,open).
 
@@ -177,7 +177,7 @@ instructionsPage1(Inst):-
 	send(Inst,display,Page,point(0,0)),
 	send(Inst,display,Next,point(599,652)),
 
-	send(Next,recogniser,click_gesture(left,'',single,and(message(@prolog,instructionsPage2,Inst)))).
+	send(Next,recogniser,click_gesture(left,'',single,and(message(@(prolog),instructionsPage2,Inst)))).
 
 instructionsPage2(Inst):-
 	send(Inst,clear),
@@ -189,8 +189,8 @@ instructionsPage2(Inst):-
 	send(Inst,display,Next,point(599,652)),
 	send(Inst,display,Previous,point(0,652)),
 
-	send(Next,recogniser,click_gesture(left,'',single,and(message(@prolog,instructionsPage3,Inst)))),
-	send(Previous,recogniser,click_gesture(left,'',single,and(message(@prolog,instructionsPage1,Inst)))).
+	send(Next,recogniser,click_gesture(left,'',single,and(message(@(prolog),instructionsPage3,Inst)))),
+	send(Previous,recogniser,click_gesture(left,'',single,and(message(@(prolog),instructionsPage1,Inst)))).
 
 
 instructionsPage3(Inst):-
@@ -203,8 +203,8 @@ instructionsPage3(Inst):-
 	send(Inst,display,Next,point(599,652)),
 	send(Inst,display,Previous,point(0,652)),
 
-	send(Next,recogniser,click_gesture(left,'',single,and(message(@prolog,instructionsPage4,Inst)))),
-	send(Previous,recogniser,click_gesture(left,'',single,and(message(@prolog,instructionsPage2,Inst)))).
+	send(Next,recogniser,click_gesture(left,'',single,and(message(@(prolog),instructionsPage4,Inst)))),
+	send(Previous,recogniser,click_gesture(left,'',single,and(message(@(prolog),instructionsPage2,Inst)))).
 
 instructionsPage4(Inst):-
 	send(Inst,clear),
@@ -214,7 +214,7 @@ instructionsPage4(Inst):-
 	send(Inst,display,Page,point(0,0)),
 	send(Inst,display,Previous,point(0,652)),
 
-	send(Previous,recogniser,click_gesture(left,'',single,and(message(@prolog,instructionsPage3,Inst)))).
+	send(Previous,recogniser,click_gesture(left,'',single,and(message(@(prolog),instructionsPage3,Inst)))).
 
 
 % the root function for Player vs Comp game. it initializes and displays
@@ -386,7 +386,7 @@ drawWithRec(W,[(X,Y)|NL],Colour):-
 	((Colour=='white',new(Pic,bitmap('greenball.bmp')));(Colour=='black',new(Pic,bitmap('redBall.bmp')))),
 	findGraphicalCoords(X,Y,CoordX,CoordY),
 	send(W,display,Pic,point(CoordX,CoordY)),
-	send(Pic,recogniser,click_gesture(left,'',single,and(message(@prolog,select_balls,W,X,Y)))),
+	send(Pic,recogniser,click_gesture(left,'',single,and(message(@(prolog),select_balls,W,X,Y)))),
 	drawWithRec(W,NL,Colour).
 
 
@@ -436,7 +436,7 @@ view_control_buttons(W):-
 	assert(buttonFlag(1)),
 	new(ConfirmStep,bitmap('confirmStepRight.bmp')),
 	send(W,display,ConfirmStep,point(580,568)),
-	send(ConfirmStep,recogniser,click_gesture(left,'',single,and(message(@prolog,show_move_options,ConfirmStep,W)))).
+	send(ConfirmStep,recogniser,click_gesture(left,'',single,and(message(@(prolog),show_move_options,ConfirmStep,W)))).
 
 view_control_buttons(W):-
 	turn(2),buttonFlag(0),
@@ -444,7 +444,7 @@ view_control_buttons(W):-
 	assert(buttonFlag(1)),
 	new(ConfirmStep,bitmap('confirmStepLeft.bmp')),
 	send(W,display,ConfirmStep,point(0,0)),
-	send(ConfirmStep,recogniser,click_gesture(left,'',single,and(message(@prolog,show_move_options,ConfirmStep,W)))).
+	send(ConfirmStep,recogniser,click_gesture(left,'',single,and(message(@(prolog),show_move_options,ConfirmStep,W)))).
 
 % After the player has chosen the tools he wants to move, the function
 % shows all possible valid moves. It cancells the interactive buttons as
@@ -679,7 +679,7 @@ view_Push_options(W,[Opt|OtherOpt],N):-
 	(turn(2), new(BMP,bitmap('PushRedBall.bmp')))),
 	findGraphicalCoords(X,Y,CoordX,CoordY),
 	send(W,display,BMP,point(CoordX,CoordY)),
-	send(BMP,recogniser,click_gesture(left,'',single,and(message(@prolog,push,W,N)))),
+	send(BMP,recogniser,click_gesture(left,'',single,and(message(@(prolog),push,W,N)))),
 	fail);
 	NN is N+1,
 	view_Push_options(W,OtherOpt,NN).
@@ -874,7 +874,7 @@ highLight_broadside_options(W,TempWin,[CurrList|OtherLists],N):-
 	   send(TempWin,display,Box,point(ValX,0)),
 	   draw_minimized(TempWin,ML,Colour,N),
 	   draw_minimized(TempWin,CurrList,'turquoise',N),
-	   send(Box,recogniser,click_gesture(left,'',single,and(message(@prolog,broadSide,W,TempWin,N)))),
+	   send(Box,recogniser,click_gesture(left,'',single,and(message(@(prolog),broadSide,W,TempWin,N)))),
 	   highLight_broadside_options(W,TempWin,OtherLists,NN).
 
 
@@ -945,7 +945,7 @@ highLightAvailCell(W,[(X,Y)|B]):-
 	send(Circle,fill_pattern(colour(turquoise))),
 	send(Circle,colour,turquoise),
 	send(W,display,Circle,point(NCoordX,NCoordY)),
-	send(Circle,recogniser,click_gesture(left,'',single,and(message(@prolog,inline,W,X,Y)))),
+	send(Circle,recogniser,click_gesture(left,'',single,and(message(@(prolog),inline,W,X,Y)))),
 	highLightAvailCell(W,B).
 
 % choosing an inline option operates the function. the function updates
